@@ -215,6 +215,13 @@ prompt_virtualenv() {
   fi
 }
 
+prompt_conda() {
+  local env=$CONDA_DEFAULT_ENV
+  if [[ $env != "" ]]; then
+      prompt_segment yellow black "$env"
+  fi
+}
+
 # Status:
 # - was there an error
 # - am I root
@@ -246,6 +253,7 @@ prompt_aws() {
 build_prompt() {
   RETVAL=$?
   prompt_status
+  prompt_conda
   prompt_virtualenv
   prompt_aws
   prompt_context
@@ -256,4 +264,6 @@ build_prompt() {
   prompt_end
 }
 
-PROMPT='%{%f%b%k%}$(build_prompt) '
+PROMPT='
+%{%f%b%k%}$(build_prompt) 
+➜ '
